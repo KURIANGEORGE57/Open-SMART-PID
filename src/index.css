@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for React Flow */
+.react-flow__node {
+  cursor: grab;
+}
+
+.react-flow__node:active {
+  cursor: grabbing;
+}
+
+.react-flow__handle {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.react-flow__node:hover .react-flow__handle,
+.react-flow__handle:hover {
+  opacity: 1;
+}
+
+/* Better edge styling */
+.react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+/* Selection styles */
+.react-flow__node.selected {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Minimap styling */
+.react-flow__minimap {
+  border-radius: 4px;
+}
+
+/* Controls styling */
+.react-flow__controls-button {
+  border-radius: 4px !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Keyboard shortcut styling */
+kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+}

@@ -1,0 +1,322 @@
+{
+  "id": "sample-feed-system",
+  "version": "1.0.0",
+  "metadata": {
+    "title": "Sample Feed System P&ID",
+    "drawingNumber": "PID-001",
+    "revision": "A",
+    "author": "Smart P&ID",
+    "date": "2025-01-01",
+    "plant": "Demo Plant",
+    "area": "100",
+    "unit": "Feed System"
+  },
+  "equipment": [
+    {
+      "id": "eq-001",
+      "type": "equipment",
+      "tag": "TK-100",
+      "description": "Feed Storage Tank",
+      "category": "tank",
+      "position": { "x": 100, "y": 100 },
+      "dimensions": { "width": 80, "height": 120 },
+      "nozzles": [
+        { "id": "n1", "name": "N1", "type": "inlet", "relativePosition": { "x": 0.5, "y": 0 }, "size": "4\"" },
+        { "id": "n2", "name": "N2", "type": "outlet", "relativePosition": { "x": 0.5, "y": 1 }, "size": "3\"" },
+        { "id": "n3", "name": "N3", "type": "vent", "relativePosition": { "x": 0.5, "y": 0 }, "size": "2\"" }
+      ],
+      "attributes": {
+        "designPressure": "ATM",
+        "designTemperature": "50°C",
+        "material": "CS",
+        "capacity": "100 m³"
+      }
+    },
+    {
+      "id": "eq-002",
+      "type": "equipment",
+      "tag": "P-101A",
+      "description": "Feed Pump A",
+      "category": "pump",
+      "subtype": "centrifugal",
+      "position": { "x": 300, "y": 200 },
+      "dimensions": { "width": 60, "height": 60 },
+      "nozzles": [
+        { "id": "suction", "name": "Suction", "type": "inlet", "relativePosition": { "x": 0, "y": 0.5 }, "size": "3\"" },
+        { "id": "discharge", "name": "Discharge", "type": "outlet", "relativePosition": { "x": 0.5, "y": 0 }, "size": "2\"" }
+      ],
+      "attributes": {
+        "designPressure": "10 barg",
+        "material": "CS",
+        "driver": "Electric",
+        "power": "15 kW"
+      }
+    },
+    {
+      "id": "eq-003",
+      "type": "equipment",
+      "tag": "V-100",
+      "description": "Feed Surge Drum",
+      "category": "vessel",
+      "position": { "x": 550, "y": 100 },
+      "dimensions": { "width": 80, "height": 140 },
+      "nozzles": [
+        { "id": "n1", "name": "N1", "type": "inlet", "relativePosition": { "x": 0, "y": 0.3 }, "size": "2\"" },
+        { "id": "n2", "name": "N2", "type": "outlet", "relativePosition": { "x": 0, "y": 0.7 }, "size": "2\"" },
+        { "id": "n3", "name": "N3", "type": "vent", "relativePosition": { "x": 0.5, "y": 0 }, "size": "1\"" },
+        { "id": "n4", "name": "N4", "type": "drain", "relativePosition": { "x": 0.5, "y": 1 }, "size": "1\"" }
+      ],
+      "attributes": {
+        "designPressure": "10 barg",
+        "designTemperature": "100°C",
+        "material": "CS"
+      }
+    }
+  ],
+  "valves": [
+    {
+      "id": "valve-001",
+      "type": "valve",
+      "tag": "XV-100",
+      "category": "gate",
+      "position": { "x": 200, "y": 200 },
+      "dimensions": { "width": 40, "height": 40 },
+      "attributes": {
+        "size": "3\"",
+        "rating": "150#",
+        "material": "CS",
+        "actuator": "manual"
+      },
+      "connectionPoints": {
+        "inlet": { "x": 0, "y": 0.5 },
+        "outlet": { "x": 1, "y": 0.5 }
+      }
+    },
+    {
+      "id": "valve-002",
+      "type": "valve",
+      "tag": "FV-100",
+      "category": "control",
+      "position": { "x": 450, "y": 130 },
+      "dimensions": { "width": 40, "height": 50 },
+      "attributes": {
+        "size": "2\"",
+        "rating": "300#",
+        "material": "CS",
+        "actuator": "pneumatic",
+        "failPosition": "closed"
+      },
+      "connectionPoints": {
+        "inlet": { "x": 0, "y": 0.5 },
+        "outlet": { "x": 1, "y": 0.5 }
+      }
+    },
+    {
+      "id": "valve-003",
+      "type": "valve",
+      "tag": "CV-101",
+      "category": "check",
+      "position": { "x": 380, "y": 130 },
+      "dimensions": { "width": 40, "height": 40 },
+      "attributes": {
+        "size": "2\"",
+        "rating": "300#",
+        "material": "CS"
+      },
+      "connectionPoints": {
+        "inlet": { "x": 0, "y": 0.5 },
+        "outlet": { "x": 1, "y": 0.5 }
+      }
+    }
+  ],
+  "instruments": [
+    {
+      "id": "inst-001",
+      "type": "instrument",
+      "tag": "FIC-100",
+      "position": { "x": 450, "y": 50 },
+      "dimensions": { "width": 40, "height": 40 },
+      "isInline": false,
+      "attributes": {
+        "function": "F",
+        "types": ["I", "C"],
+        "location": "control_room",
+        "loopNumber": "100",
+        "range": "0-100 m³/h",
+        "signalType": "4-20mA"
+      },
+      "connectionPoints": {
+        "process": { "x": 0.5, "y": 1 },
+        "signal": { "x": 0.5, "y": 0 }
+      }
+    },
+    {
+      "id": "inst-002",
+      "type": "instrument",
+      "tag": "LI-100",
+      "position": { "x": 620, "y": 50 },
+      "dimensions": { "width": 40, "height": 40 },
+      "isInline": false,
+      "attributes": {
+        "function": "L",
+        "types": ["I"],
+        "location": "field",
+        "loopNumber": "100",
+        "range": "0-100%"
+      },
+      "connectionPoints": {
+        "process": { "x": 0.5, "y": 1 }
+      }
+    },
+    {
+      "id": "inst-003",
+      "type": "instrument",
+      "tag": "PI-101",
+      "position": { "x": 300, "y": 100 },
+      "dimensions": { "width": 40, "height": 40 },
+      "isInline": false,
+      "attributes": {
+        "function": "P",
+        "types": ["I"],
+        "location": "field",
+        "loopNumber": "101",
+        "range": "0-15 barg"
+      },
+      "connectionPoints": {
+        "process": { "x": 0.5, "y": 1 }
+      }
+    }
+  ],
+  "lines": [
+    {
+      "id": "line-001",
+      "type": "line",
+      "lineType": "process",
+      "position": { "x": 0, "y": 0 },
+      "source": {
+        "elementId": "eq-001",
+        "nozzleId": "n2"
+      },
+      "target": {
+        "elementId": "valve-001",
+        "connectionPoint": "inlet"
+      },
+      "attributes": {
+        "lineNumber": "001-P-3\"-CS-150#",
+        "size": "3\"",
+        "material": "CS",
+        "rating": "150#",
+        "fluid": "Process Feed"
+      }
+    },
+    {
+      "id": "line-002",
+      "type": "line",
+      "lineType": "process",
+      "position": { "x": 0, "y": 0 },
+      "source": {
+        "elementId": "valve-001",
+        "connectionPoint": "outlet"
+      },
+      "target": {
+        "elementId": "eq-002",
+        "nozzleId": "suction"
+      },
+      "attributes": {
+        "lineNumber": "002-P-3\"-CS-150#",
+        "size": "3\"",
+        "material": "CS",
+        "rating": "150#"
+      }
+    },
+    {
+      "id": "line-003",
+      "type": "line",
+      "lineType": "process",
+      "position": { "x": 0, "y": 0 },
+      "source": {
+        "elementId": "eq-002",
+        "nozzleId": "discharge"
+      },
+      "target": {
+        "elementId": "valve-003",
+        "connectionPoint": "inlet"
+      },
+      "attributes": {
+        "lineNumber": "003-P-2\"-CS-300#",
+        "size": "2\"",
+        "material": "CS",
+        "rating": "300#"
+      }
+    },
+    {
+      "id": "line-004",
+      "type": "line",
+      "lineType": "process",
+      "position": { "x": 0, "y": 0 },
+      "source": {
+        "elementId": "valve-003",
+        "connectionPoint": "outlet"
+      },
+      "target": {
+        "elementId": "valve-002",
+        "connectionPoint": "inlet"
+      },
+      "attributes": {
+        "lineNumber": "003-P-2\"-CS-300#",
+        "size": "2\"",
+        "material": "CS",
+        "rating": "300#"
+      }
+    },
+    {
+      "id": "line-005",
+      "type": "line",
+      "lineType": "process",
+      "position": { "x": 0, "y": 0 },
+      "source": {
+        "elementId": "valve-002",
+        "connectionPoint": "outlet"
+      },
+      "target": {
+        "elementId": "eq-003",
+        "nozzleId": "n1"
+      },
+      "attributes": {
+        "lineNumber": "003-P-2\"-CS-300#",
+        "size": "2\"",
+        "material": "CS",
+        "rating": "300#"
+      }
+    },
+    {
+      "id": "line-006",
+      "type": "line",
+      "lineType": "signal",
+      "position": { "x": 0, "y": 0 },
+      "source": {
+        "elementId": "inst-001",
+        "connectionPoint": "process"
+      },
+      "target": {
+        "elementId": "valve-002",
+        "connectionPoint": "inlet"
+      },
+      "attributes": {}
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-001",
+      "type": "annotation",
+      "text": "NOTE: P-101B (spare) not shown",
+      "position": { "x": 300, "y": 280 },
+      "fontSize": 10
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  }
+}

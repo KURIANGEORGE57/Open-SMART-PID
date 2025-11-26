@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Vessel shape -->
+  <path d="M8 6 A6 6 0 0 1 24 6 L24 22 A6 6 0 0 1 8 22 Z" 
+        fill="none" stroke="#1f2937" stroke-width="2"/>
+  <!-- Top ellipse -->
+  <ellipse cx="16" cy="6" rx="8" ry="3" fill="none" stroke="#1f2937" stroke-width="2"/>
+  <!-- Connection nodes -->
+  <circle cx="8" cy="14" r="2" fill="#3b82f6"/>
+  <circle cx="24" cy="14" r="2" fill="#3b82f6"/>
+  <circle cx="16" cy="28" r="2" fill="#3b82f6"/>
+</svg>
