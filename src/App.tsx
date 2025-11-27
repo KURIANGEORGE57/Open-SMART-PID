@@ -1,11 +1,14 @@
 import Canvas from './components/Canvas';
 import Toolbar from './components/Toolbar';
 import PropertyPanel from './components/PropertyPanel';
+import ValidationIndicator from './components/ValidationIndicator';
 import { useDiagramStore } from './store/diagramStore';
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { saveDiagramToFile } from './utils/serialization';
 
 /**
  * Smart P&ID - Main Application
- * 
+ *
  * Layout:
  * ┌─────────┬────────────────────────┬──────────┐
  * │ Toolbar │        Canvas          │ Property │
@@ -15,6 +18,14 @@ import { useDiagramStore } from './store/diagramStore';
  */
 export default function App() {
   const { diagram, isDirty } = useDiagramStore();
+
+  // Handle save via keyboard shortcut
+  const handleSave = () => {
+    saveDiagramToFile(diagram);
+  };
+
+  // Setup keyboard shortcuts
+  useKeyboardShortcuts(handleSave);
 
   return (
     <div className="h-screen w-screen flex flex-col bg-gray-100 overflow-hidden">
@@ -29,6 +40,8 @@ export default function App() {
           {isDirty && <span className="text-amber-400 ml-1">•</span>}
         </span>
         <div className="flex-1" />
+        <ValidationIndicator />
+        <span className="mx-3 text-gray-600">|</span>
         <span className="text-xs text-gray-500">
           v0.1.0 (Open Source)
         </span>

@@ -19,13 +19,14 @@ import {
 import '@xyflow/react/dist/style.css';
 
 import { nodeTypes } from './nodes';
+import { edgeTypes } from './edges';
 import { useDiagramStore } from '../store/diagramStore';
-import { 
-  Equipment, 
-  Valve, 
-  Instrument, 
+import {
+  Equipment,
+  Valve,
+  Instrument,
   ProcessLine,
-  createLine 
+  createLine
 } from '../types/schema';
 
 /**
@@ -98,26 +99,31 @@ export default function Canvas() {
 
   // Convert P&ID lines to React Flow edges
   const edges: Edge[] = useMemo(() => {
-    return diagram.lines.map((line) => ({
-      id: line.id,
-      source: line.source.elementId,
-      sourceHandle: line.source.nozzleId || line.source.connectionPoint,
-      target: line.target.elementId,
-      targetHandle: line.target.nozzleId || line.target.connectionPoint,
-      type: 'smoothstep',
-      style: { 
-        stroke: getLineColor(line),
-        strokeWidth: 2,
-      },
-      label: line.attributes.lineNumber,
-      labelStyle: { 
-        fontSize: 10, 
-        fontFamily: 'monospace',
-        fill: '#374151',
-      },
-      labelBgStyle: { fill: 'white' },
-      selected: selectedIds.includes(line.id),
-    }));
+    return diagram.lines.map((line) => {
+      const isSignalLine = ['signal', 'electrical', 'pneumatic'].includes(line.lineType);
+
+      return {
+        id: line.id,
+        source: line.source.elementId,
+        sourceHandle: line.source.nozzleId || line.source.connectionPoint,
+        target: line.target.elementId,
+        targetHandle: line.target.nozzleId || line.target.connectionPoint,
+        type: isSignalLine ? 'signalLine' : 'processLine',
+        style: {
+          stroke: getLineColor(line),
+          strokeWidth: 2,
+        },
+        data: {
+          lineNumber: line.attributes.lineNumber,
+          lineType: line.lineType,
+          insulation: line.attributes.insulation,
+          tracing: line.attributes.tracing,
+          signalType: line.lineType,
+          signalLabel: line.attributes.signalType,
+        },
+        selected: selectedIds.includes(line.id),
+      };
+    });
   }, [diagram.lines, selectedIds]);
 
   // Handle node position changes
@@ -198,6 +204,7 @@ export default function Canvas() {
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
@@ -207,7 +214,7 @@ export default function Canvas() {
         snapToGrid
         snapGrid={[10, 10]}
         defaultEdgeOptions={{
-          type: 'smoothstep',
+          type: 'processLine',
           style: { strokeWidth: 2 },
         }}
         connectionLineStyle={{ strokeWidth: 2 }}
@@ -222,13 +229,19 @@ export default function Canvas() {
         <Controls 
           className="!bg-white !border-gray-300 !shadow-md"
         />
-        <MiniMap 
+        <MiniMap
           className="!bg-gray-100 !border-gray-300"
           nodeColor={(node) => {
             switch (node.type) {
               case 'vessel':
               case 'pump':
                 return '#3b82f6';
+              case 'tank':
+                return '#0891b2';
+              case 'column':
+                return '#7c3aed';
+              case 'heat_exchanger':
+                return '#dc2626';
               case 'valve':
                 return '#10b981';
               case 'instrument':
@@ -252,16 +265,18 @@ function getNodeType(equipment: Equipment): string {
   switch (equipment.category) {
     case 'vessel':
     case 'drum':
-    case 'tank':
-    case 'column':
     case 'reactor':
       return 'vessel';
+    case 'tank':
+      return 'tank';
+    case 'column':
+      return 'column';
     case 'pump':
     case 'compressor':
     case 'blower':
       return 'pump';
     case 'heat_exchanger':
-      return 'vessel'; // TODO: Create dedicated HX node
+      return 'heat_exchanger';
     default:
       return 'vessel';
   }

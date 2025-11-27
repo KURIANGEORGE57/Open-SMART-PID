@@ -1,6 +1,6 @@
-import { 
-  MousePointer2, 
-  Hand, 
+import {
+  MousePointer2,
+  Hand,
   Link2,
   Circle,
   Square,
@@ -12,15 +12,19 @@ import {
   Undo2,
   Redo2,
   Trash2,
+  Image,
+  FileImage,
 } from 'lucide-react';
 import { useDiagramStore, ToolType, selectCanUndo, selectCanRedo } from '../store/diagramStore';
-import { 
-  createEquipment, 
-  createValve, 
+import {
+  createEquipment,
+  createValve,
   createInstrument,
   EquipmentCategory,
   ValveCategory,
 } from '../types/schema';
+import { saveDiagramToFile, loadDiagramFromFile } from '../utils/serialization';
+import { exportToSVG, exportToPNG } from '../utils/export';
 
 /**
  * Toolbar Component
@@ -95,37 +99,34 @@ export default function Toolbar() {
 
   // Save diagram to file
   const handleSave = () => {
-    const json = JSON.stringify(diagram, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${diagram.metadata.title || 'pid-diagram'}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    saveDiagramToFile(diagram);
   };
 
   // Load diagram from file
   const handleLoad = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (!file) return;
-      
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const json = JSON.parse(e.target?.result as string);
-          setDiagram(json);
-        } catch (err) {
-          alert('Failed to load diagram: Invalid JSON');
-        }
-      };
-      reader.readAsText(file);
-    };
-    input.click();
+    loadDiagramFromFile(setDiagram);
+  };
+
+  // Export to SVG
+  const handleExportSVG = async () => {
+    try {
+      const filename = `${diagram.metadata.title || 'diagram'}.svg`;
+      await exportToSVG(filename);
+    } catch (error) {
+      console.error('Failed to export SVG:', error);
+      alert('Failed to export SVG. Please try again.');
+    }
+  };
+
+  // Export to PNG
+  const handleExportPNG = async () => {
+    try {
+      const filename = `${diagram.metadata.title || 'diagram'}.png`;
+      await exportToPNG(filename);
+    } catch (error) {
+      console.error('Failed to export PNG:', error);
+      alert('Failed to export PNG. Please try again.');
+    }
   };
 
   return (
@@ -162,6 +163,16 @@ export default function Toolbar() {
           icon={<Square size={20} />}
           label="Tank"
           onClick={() => handleAddEquipment('tank')}
+        />
+        <ToolButton
+          icon={<HeatExchangerIcon />}
+          label="HX"
+          onClick={() => handleAddEquipment('heat_exchanger')}
+        />
+        <ToolButton
+          icon={<ColumnIcon />}
+          label="Column"
+          onClick={() => handleAddEquipment('column')}
         />
       </ToolSection>
 
@@ -256,6 +267,20 @@ export default function Toolbar() {
           onClick={handleSave}
         />
       </ToolSection>
+
+      {/* Export */}
+      <ToolSection title="Export">
+        <ToolButton
+          icon={<Image size={20} />}
+          label="SVG"
+          onClick={handleExportSVG}
+        />
+        <ToolButton
+          icon={<FileImage size={20} />}
+          label="PNG"
+          onClick={handleExportPNG}
+        />
+      </ToolSection>
     </div>
   );
 }
@@ -328,6 +353,33 @@ function ValveIcon({ type }: { type: string }) {
       {type === 'check' && (
         <path d="M 2 6 L 10 10 L 2 14 Z" fill="currentColor" />
       )}
+    </svg>
+  );
+}
+
+/** Heat exchanger icon for toolbar */
+function HeatExchangerIcon() {
+  return (
+    <svg width={20} height={20} viewBox="0 0 20 20">
+      <circle cx={10} cy={10} r={7} fill="none" stroke="currentColor" strokeWidth={1.5} />
+      <line x1={5} y1={8} x2={15} y2={8} stroke="currentColor" strokeWidth={1} />
+      <line x1={5} y1={10} x2={15} y2={10} stroke="currentColor" strokeWidth={1} />
+      <line x1={5} y1={12} x2={15} y2={12} stroke="currentColor" strokeWidth={1} />
+    </svg>
+  );
+}
+
+/** Column icon for toolbar */
+function ColumnIcon() {
+  return (
+    <svg width={20} height={20} viewBox="0 0 20 20">
+      <rect x={7} y={2} width={6} height={16} fill="none" stroke="currentColor" strokeWidth={1.5} rx={1} />
+      <line x1={7} y1={6} x2={13} y2={6} stroke="currentColor" strokeWidth={0.5} strokeDasharray="1,1" />
+      <line x1={7} y1={9} x2={13} y2={9} stroke="currentColor" strokeWidth={0.5} strokeDasharray="1,1" />
+      <line x1={7} y1={12} x2={13} y2={12} stroke="currentColor" strokeWidth={0.5} strokeDasharray="1,1" />
+      <line x1={7} y1={15} x2={13} y2={15} stroke="currentColor" strokeWidth={0.5} strokeDasharray="1,1" />
+      <line x1={10} y1={0} x2={10} y2={2} stroke="currentColor" strokeWidth={1.5} />
+      <line x1={10} y1={18} x2={10} y2={20} stroke="currentColor" strokeWidth={1.5} />
     </svg>
   );
 }
