@@ -43,7 +43,7 @@ export default function App() {
         <ValidationIndicator />
         <span className="mx-3 text-gray-600">|</span>
         <span className="text-xs text-gray-500">
-          v0.1.0 (Open Source)
+          v0.2.0 (Phase 2 Complete)
         </span>
       </header>
 
