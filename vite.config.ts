@@ -11,4 +11,5 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
   },
+  base: './', // Important for Electron to load resources correctly
 });
