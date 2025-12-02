@@ -11,8 +11,8 @@ interface PumpNodeData {
  * Pump Node - renders centrifugal pump symbol
  * ISA S5.1 style: circle with arrow indicating flow direction
  */
-function PumpNode({ data, selected }: NodeProps<PumpNodeData>) {
-  const { equipment } = data;
+function PumpNode({ data, selected }: NodeProps) {
+  const { equipment } = data as PumpNodeData;
   const { dimensions, tag, subtype } = equipment;
   const { width, height } = dimensions;
   

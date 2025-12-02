@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Handle, Position, NodeProps } from '@xyflow/react';
-import { Valve, ValveCategory } from '../../types/schema';
+import { Valve } from '../../types/schema';
 
 interface ValveNodeData {
   valve: Valve;
@@ -11,8 +11,8 @@ interface ValveNodeData {
  * Valve Node - renders various valve symbols
  * ISA S5.1 / ISO 10628 style symbols
  */
-function ValveNode({ data, selected }: NodeProps<ValveNodeData>) {
-  const { valve } = data;
+function ValveNode({ data, selected }: NodeProps) {
+  const { valve } = data as ValveNodeData;
   const { dimensions, tag, category, attributes } = valve;
   const { width, height } = dimensions;
   
@@ -109,8 +109,7 @@ function GateValveSymbol({ width, height, stroke, strokeWidth }: SymbolProps) {
   const cx = width / 2;
   const cy = height / 2;
   const triangleHeight = height * 0.4;
-  const triangleWidth = width * 0.4;
-  
+
   return (
     <g>
       {/* Left triangle */}

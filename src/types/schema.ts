@@ -318,12 +318,12 @@ export function createEquipment(
   return {
     id: partial.id || crypto.randomUUID(),
     type: 'equipment',
-    category: partial.category,
     position: partial.position || { x: 0, y: 0 },
     dimensions: partial.dimensions || { width: 80, height: 120 },
     nozzles: partial.nozzles || [],
     attributes: partial.attributes || {},
     ...partial,
+    category: partial.category,
   };
 }
 
@@ -333,7 +333,6 @@ export function createValve(
   return {
     id: partial.id || crypto.randomUUID(),
     type: 'valve',
-    category: partial.category,
     position: partial.position || { x: 0, y: 0 },
     dimensions: partial.dimensions || { width: 40, height: 40 },
     attributes: partial.attributes || {},
@@ -342,15 +341,17 @@ export function createValve(
       outlet: { x: 1, y: 0.5 },
     },
     ...partial,
+    category: partial.category,
   };
 }
 
 export function createInstrument(
-  partial: Partial<Instrument> & { 
-    attributes: Pick<InstrumentAttributes, 'function' | 'types' | 'location'> 
+  partial: Partial<Instrument> & {
+    attributes: Pick<InstrumentAttributes, 'function' | 'types' | 'location'>
   }
 ): Instrument {
   return {
+    ...partial,
     id: partial.id || crypto.randomUUID(),
     type: 'instrument',
     position: partial.position || { x: 0, y: 0 },
@@ -361,7 +362,6 @@ export function createInstrument(
       location: 'field',
       ...partial.attributes,
     },
-    ...partial,
   };
 }
 
@@ -377,9 +377,9 @@ export function createLine(
     lineType: partial.lineType || 'process',
     position: { x: 0, y: 0 }, // Lines don't really have a position
     attributes: partial.attributes || {},
+    ...partial,
     source: partial.source,
     target: partial.target,
-    ...partial,
   };
 }
 

@@ -12,13 +12,8 @@
  * @module validation
  */
 
-import { 
-  PIDDiagram, 
-  Equipment, 
-  Valve, 
-  Instrument, 
-  ProcessLine,
-  PIDNode
+import {
+  PIDDiagram
 } from '../types/schema';
 
 // =============================================================================

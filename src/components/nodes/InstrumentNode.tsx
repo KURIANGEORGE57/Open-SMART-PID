@@ -9,7 +9,7 @@ interface InstrumentNodeData {
 
 /**
  * Instrument Node - renders instrument bubbles per ISA S5.1
- * 
+ *
  * Standard instrument bubble is a circle with:
  * - Tag number in upper half
  * - Function letters (FIC, TI, etc.)
@@ -17,8 +17,8 @@ interface InstrumentNodeData {
  * - Additional line for panel-mounted
  * - Square for DCS/PLC
  */
-function InstrumentNode({ data, selected }: NodeProps<InstrumentNodeData>) {
-  const { instrument } = data;
+function InstrumentNode({ data, selected }: NodeProps) {
+  const { instrument } = data as InstrumentNodeData;
   const { dimensions, tag, attributes, isInline } = instrument;
   const { width, height } = dimensions;
   

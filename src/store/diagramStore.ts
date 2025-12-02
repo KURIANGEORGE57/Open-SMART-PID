@@ -364,7 +364,7 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
 
   // Generic actions
   deleteSelected: () => {
-    const { selectedIds, diagram } = get();
+    const { selectedIds } = get();
     if (selectedIds.length === 0) return;
     
     get().saveToHistory();

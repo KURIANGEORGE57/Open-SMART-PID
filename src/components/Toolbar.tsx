@@ -1,7 +1,6 @@
-import { 
-  MousePointer2, 
-  Hand, 
-  Link2,
+import {
+  MousePointer2,
+  Hand,
   Circle,
   Square,
   Cylinder,
@@ -13,7 +12,7 @@ import {
   Redo2,
   Trash2,
 } from 'lucide-react';
-import { useDiagramStore, ToolType, selectCanUndo, selectCanRedo } from '../store/diagramStore';
+import { useDiagramStore, selectCanUndo, selectCanRedo } from '../store/diagramStore';
 import { 
   createEquipment, 
   createValve, 
@@ -358,12 +357,12 @@ function generateTag(category: EquipmentCategory): string {
   return `${prefix}-${100 + tagCounters[prefix]}`;
 }
 
-function generateValveTag(category: ValveCategory): string {
+function generateValveTag(_category: ValveCategory): string {
   tagCounters['valve'] = (tagCounters['valve'] || 0) + 1;
   return `XV-${100 + tagCounters['valve']}`;
 }
 
-function getDefaultNozzles(category: EquipmentCategory) {
+function getDefaultNozzles(_category: EquipmentCategory) {
   // Return default nozzle configuration based on equipment type
   return [
     { id: 'n1', name: 'N1', type: 'inlet' as const, relativePosition: { x: 0, y: 0.3 } },

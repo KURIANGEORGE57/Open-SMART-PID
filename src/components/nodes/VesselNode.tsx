@@ -11,9 +11,9 @@ interface VesselNodeData {
  * Vessel Node - renders vertical pressure vessels, drums, etc.
  * ISA S5.1 style symbol
  */
-function VesselNode({ data, selected }: NodeProps<VesselNodeData>) {
-  const { equipment } = data;
-  const { dimensions, tag, nozzles } = equipment;
+function VesselNode({ data, selected }: NodeProps) {
+  const { equipment } = data as VesselNodeData;
+  const { dimensions, tag } = equipment;
   const { width, height } = dimensions;
   
   // Calculate head radius (typically 1/4 of width for 2:1 elliptical)

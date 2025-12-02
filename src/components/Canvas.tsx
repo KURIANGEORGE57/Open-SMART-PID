@@ -7,25 +7,18 @@ import {
   Node,
   Edge,
   Connection,
-  useNodesState,
-  useEdgesState,
-  addEdge,
   BackgroundVariant,
   NodeChange,
   EdgeChange,
-  applyNodeChanges,
-  applyEdgeChanges,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 import { nodeTypes } from './nodes';
 import { useDiagramStore } from '../store/diagramStore';
-import { 
-  Equipment, 
-  Valve, 
-  Instrument, 
+import {
+  Equipment,
   ProcessLine,
-  createLine 
+  createLine
 } from '../types/schema';
 
 /**
