@@ -350,18 +350,16 @@ export function createInstrument(
     attributes: Pick<InstrumentAttributes, 'function' | 'types' | 'location'>
   }
 ): Instrument {
+  const { attributes: partialAttributes, ...restPartial } = partial;
   return {
-    ...partial,
+    ...restPartial,
     id: partial.id || crypto.randomUUID(),
     type: 'instrument',
     position: partial.position || { x: 0, y: 0 },
     dimensions: partial.dimensions || { width: 40, height: 40 },
     isInline: partial.isInline ?? false,
     connectionPoints: partial.connectionPoints || {},
-    attributes: {
-      location: 'field',
-      ...partial.attributes,
-    },
+    attributes: partialAttributes,
   };
 }
 
