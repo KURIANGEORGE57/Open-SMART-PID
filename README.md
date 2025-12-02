@@ -17,10 +17,47 @@ An open-source intelligent Piping and Instrumentation Diagram editor.
 
 ## Quick Start
 
+### Web Version (Browser)
+
 ```bash
 npm install
 npm run dev
 ```
+
+### Desktop Application (PC)
+
+This application now supports running as a native desktop application on Windows, macOS, and Linux!
+
+#### Running in Development Mode
+
+```bash
+# Install dependencies first
+npm install
+
+# Run the desktop app in development mode
+npm run electron:dev
+```
+
+#### Building Standalone Desktop Applications
+
+```bash
+# Build for your current platform
+npm run electron:build
+
+# Or build for specific platforms:
+npm run electron:build:win    # Windows (creates installer and portable .exe)
+npm run electron:build:mac    # macOS (creates .dmg and .zip)
+npm run electron:build:linux  # Linux (creates AppImage, .deb, and .rpm)
+```
+
+The built applications will be in the `release/` directory.
+
+**Desktop App Features:**
+- Native window controls and menus
+- File menu with keyboard shortcuts (Ctrl+S to save, Ctrl+O to open, etc.)
+- Export diagrams directly from the File menu
+- Works offline - no internet connection required
+- Better performance than browser version
 
 ## Project Structure
 
