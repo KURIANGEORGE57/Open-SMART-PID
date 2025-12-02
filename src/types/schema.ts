@@ -21,6 +21,25 @@ export interface Position {
   y: number;
 }
 
+// =============================================================================
+// SEMANTIC ZOOM TYPES
+// =============================================================================
+
+/** Zoom level types for semantic zoom feature */
+export type ZoomLevel = 'L0' | 'L1' | 'L3';
+
+/** Level of Detail configuration for elements */
+export interface LODConfig {
+  /** At which zoom levels this element should be visible */
+  visibleAtLevels: ZoomLevel[];
+  /** If true, label is shown even at L1 (simplified view) */
+  criticalLabel?: boolean;
+  /** For L0 aggregation - elements with same group are bundled */
+  aggregationGroup?: string;
+  /** Classification for filtering (e.g., 'Drain', 'Vent', 'SamplePoint') */
+  class?: string;
+}
+
 export interface Dimensions {
   width: number;
   height: number;
@@ -33,6 +52,7 @@ export interface PIDElement {
   description?: string;
   position: Position;
   rotation?: number;         // degrees, 0-360
+  lod?: LODConfig;           // Level of detail configuration for semantic zoom
   metadata?: Record<string, unknown>;
 }
 
@@ -266,21 +286,37 @@ export interface DiagramMetadata {
   scale?: string;
 }
 
+/** Hierarchy information for multi-level plant organization */
+export interface PlantHierarchy {
+  /** Complex/Site level identifier */
+  complex?: string;
+  /** Plant level identifier */
+  plant?: string;
+  /** Area within plant */
+  area?: string;
+  /** Process unit identifier */
+  unit?: string;
+  /** Drawing sheet number */
+  sheet?: string;
+}
+
 export interface PIDDiagram {
   id: string;
   version: string;           // schema version for migrations
   metadata: DiagramMetadata;
+  hierarchy?: PlantHierarchy; // Plant hierarchy for multi-level views
   equipment: Equipment[];
   valves: Valve[];
   instruments: Instrument[];
   lines: ProcessLine[];
   annotations: TextAnnotation[];
-  
+
   // Viewport state (optional, for restoring view)
   viewport?: {
     x: number;
     y: number;
     zoom: number;
+    currentLevel?: ZoomLevel; // Current semantic zoom level
   };
 }
 
