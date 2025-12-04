@@ -1,7 +1,6 @@
 import { 
   MousePointer2, 
   Hand, 
-  Link2,
   Circle,
   Square,
   Cylinder,
@@ -13,7 +12,7 @@ import {
   Redo2,
   Trash2,
 } from 'lucide-react';
-import { useDiagramStore, ToolType, selectCanUndo, selectCanRedo } from '../store/diagramStore';
+import { useDiagramStore, selectCanUndo, selectCanRedo } from '../store/diagramStore';
 import { 
   createEquipment, 
   createValve, 

@@ -13,7 +13,7 @@ interface VesselNodeData {
  */
 function VesselNode({ data, selected }: NodeProps<VesselNodeData>) {
   const { equipment } = data;
-  const { dimensions, tag, nozzles } = equipment;
+  const { dimensions, tag } = equipment;
   const { width, height } = dimensions;
   
   // Calculate head radius (typically 1/4 of width for 2:1 elliptical)

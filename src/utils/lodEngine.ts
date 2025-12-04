@@ -281,7 +281,6 @@ export function applyDefaultLOD(entity: PIDEntity): PIDEntity {
 
   // Type-specific defaults
   if (entity.type === 'equipment') {
-    const equipment = entity as Equipment;
     lodConfig = {
       visibleAtLevels: ['L0', 'L1', 'L3'],
       criticalLabel: true, // Equipment tags are usually critical

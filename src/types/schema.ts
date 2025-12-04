@@ -352,14 +352,14 @@ export function createEquipment(
   partial: Partial<Equipment> & { category: EquipmentCategory }
 ): Equipment {
   return {
+    ...partial,
     id: partial.id || crypto.randomUUID(),
-    type: 'equipment',
+    type: 'equipment' as const,
     category: partial.category,
     position: partial.position || { x: 0, y: 0 },
     dimensions: partial.dimensions || { width: 80, height: 120 },
     nozzles: partial.nozzles || [],
     attributes: partial.attributes || {},
-    ...partial,
   };
 }
 
@@ -367,8 +367,9 @@ export function createValve(
   partial: Partial<Valve> & { category: ValveCategory }
 ): Valve {
   return {
+    ...partial,
     id: partial.id || crypto.randomUUID(),
-    type: 'valve',
+    type: 'valve' as const,
     category: partial.category,
     position: partial.position || { x: 0, y: 0 },
     dimensions: partial.dimensions || { width: 40, height: 40 },
@@ -377,27 +378,26 @@ export function createValve(
       inlet: { x: 0, y: 0.5 },
       outlet: { x: 1, y: 0.5 },
     },
-    ...partial,
   };
 }
 
 export function createInstrument(
-  partial: Partial<Instrument> & { 
-    attributes: Pick<InstrumentAttributes, 'function' | 'types' | 'location'> 
+  partial: Partial<Instrument> & {
+    attributes: Pick<InstrumentAttributes, 'function' | 'types' | 'location'>
   }
 ): Instrument {
   return {
+    ...partial,
     id: partial.id || crypto.randomUUID(),
-    type: 'instrument',
+    type: 'instrument' as const,
     position: partial.position || { x: 0, y: 0 },
     dimensions: partial.dimensions || { width: 40, height: 40 },
     isInline: partial.isInline ?? false,
     connectionPoints: partial.connectionPoints || {},
     attributes: {
-      location: 'field',
       ...partial.attributes,
+      location: partial.attributes.location || 'field',
     },
-    ...partial,
   };
 }
 
@@ -408,14 +408,14 @@ export function createLine(
   }
 ): ProcessLine {
   return {
+    ...partial,
     id: partial.id || crypto.randomUUID(),
-    type: 'line',
+    type: 'line' as const,
     lineType: partial.lineType || 'process',
     position: { x: 0, y: 0 }, // Lines don't really have a position
     attributes: partial.attributes || {},
     source: partial.source,
     target: partial.target,
-    ...partial,
   };
 }
 

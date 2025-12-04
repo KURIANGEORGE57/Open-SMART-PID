@@ -14,11 +14,6 @@
 
 import { 
   PIDDiagram, 
-  Equipment, 
-  Valve, 
-  Instrument, 
-  ProcessLine,
-  PIDNode
 } from '../types/schema';
 
 // =============================================================================

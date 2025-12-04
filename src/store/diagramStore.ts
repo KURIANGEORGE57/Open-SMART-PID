@@ -364,7 +364,7 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
 
   // Generic actions
   deleteSelected: () => {
-    const { selectedIds, diagram } = get();
+    const { selectedIds } = get();
     if (selectedIds.length === 0) return;
     
     get().saveToHistory();
@@ -418,7 +418,7 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
   },
   
   undo: () => {
-    const { history, diagram } = get();
+    const { history } = get();
     if (history.past.length === 0) return;
     
     const previous = history.past[history.past.length - 1];
@@ -434,14 +434,14 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
   },
   
   redo: () => {
-    const { history, diagram } = get();
+    const { history } = get();
     if (history.future.length === 0) return;
     
     const next = history.future[0];
     set({
       diagram: next,
       history: {
-        past: [...history.past, diagram],
+        past: [...history.past],
         future: history.future.slice(1)
       },
       selectedIds: [],
