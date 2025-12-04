@@ -2,17 +2,12 @@ import { memo } from 'react';
 import { Handle, Position, NodeProps } from '@xyflow/react';
 import { Equipment } from '../../types/schema';
 
-interface PumpNodeData {
-  equipment: Equipment;
-  selected?: boolean;
-}
-
 /**
  * Pump Node - renders centrifugal pump symbol
  * ISA S5.1 style: circle with arrow indicating flow direction
  */
-function PumpNode({ data, selected }: NodeProps<PumpNodeData>) {
-  const { equipment } = data;
+function PumpNode({ data, selected }: NodeProps) {
+  const { equipment } = data as { equipment: Equipment; selected?: boolean };
   const { dimensions, tag, subtype } = equipment;
   const { width, height } = dimensions;
   

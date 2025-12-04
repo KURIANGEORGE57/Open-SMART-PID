@@ -418,9 +418,9 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
   },
   
   undo: () => {
-    const { history } = get();
+    const { history, diagram } = get();
     if (history.past.length === 0) return;
-    
+
     const previous = history.past[history.past.length - 1];
     set({
       diagram: previous,

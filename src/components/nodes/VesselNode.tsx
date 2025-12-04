@@ -2,17 +2,12 @@ import { memo } from 'react';
 import { Handle, Position, NodeProps } from '@xyflow/react';
 import { Equipment } from '../../types/schema';
 
-interface VesselNodeData {
-  equipment: Equipment;
-  selected?: boolean;
-}
-
 /**
  * Vessel Node - renders vertical pressure vessels, drums, etc.
  * ISA S5.1 style symbol
  */
-function VesselNode({ data, selected }: NodeProps<VesselNodeData>) {
-  const { equipment } = data;
+function VesselNode({ data, selected }: NodeProps) {
+  const { equipment } = data as { equipment: Equipment; selected?: boolean };
   const { dimensions, tag } = equipment;
   const { width, height } = dimensions;
   

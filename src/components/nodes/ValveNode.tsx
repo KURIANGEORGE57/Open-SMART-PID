@@ -2,17 +2,12 @@ import { memo } from 'react';
 import { Handle, Position, NodeProps } from '@xyflow/react';
 import { Valve } from '../../types/schema';
 
-interface ValveNodeData {
-  valve: Valve;
-  selected?: boolean;
-}
-
 /**
  * Valve Node - renders various valve symbols
  * ISA S5.1 / ISO 10628 style symbols
  */
-function ValveNode({ data, selected }: NodeProps<ValveNodeData>) {
-  const { valve } = data;
+function ValveNode({ data, selected }: NodeProps) {
+  const { valve } = data as { valve: Valve; selected?: boolean };
   const { dimensions, tag, category, attributes } = valve;
   const { width, height } = dimensions;
   
