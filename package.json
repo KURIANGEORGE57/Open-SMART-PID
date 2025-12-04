@@ -2,7 +2,7 @@
   "name": "smart-pid",
   "version": "0.1.0",
   "description": "Open-source intelligent P&ID diagram editor",
-  "main": "electron/main.js",
+  "main": "electron/main.cjs",
   "type": "module",
   "scripts": {
     "dev": "vite",
